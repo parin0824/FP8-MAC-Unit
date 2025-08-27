@@ -43,9 +43,7 @@ module testbench;
  accum96 = 8'b00000000;
  current_a96 = 8'b00000000;
  current_b96 = 8'b00000000;
-7
-
- // Initialize test vectors
+// Initialize test vectors
  A96[0] = 8'b00110011; B96[0] = 8'b00111000;
  A96[1] = 8'b00110110; B96[1] = 8'b10101100;
  A96[2] = 8'b00111000; B96[2] = 8'b00110100;
@@ -91,4 +89,6 @@ module testbench;
  // Monitor for debug
  initial begin
  $monitor("Time: %t, CLK: %b, RST: %b, A: %b, B: %b, MULT: %b, ACCUM: %b, RESULT: %b",
- $time, clk
+ $time, clk96, rst96, current_a96, current_b96, mult_result96, accum96, accum_result96);
+ end
+endmodule
