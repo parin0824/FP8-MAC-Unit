@@ -91,4 +91,4 @@ module testbench;
  // Monitor for debug
  initial begin
  $monitor("Time: %t, CLK: %b, RST: %b, A: %b, B: %b, MULT: %b, ACCUM: %b, RESULT: %b",
- $time, 
+ $time, clk
