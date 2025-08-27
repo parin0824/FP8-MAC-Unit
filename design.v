@@ -171,4 +171,28 @@ module fp8_add_pipelined (
  norm_mant96 <= mant_sum96;
  norm_exp96 <= exp_out_add96;
  end else if (mant_sum96[5]) begin
- norm_mant96 <= mant_sum96 <
+ norm_mant96 <= mant_sum96 << 1;
+ norm_exp96 <= (exp_out_add96 > 0) ? exp_out_add96 - 1 : 3'b000;
+ end else if (mant_sum96[4]) begin
+ norm_mant96 <= mant_sum96 << 2;
+ norm_exp96 <= (exp_out_add96 > 1) ? exp_out_add96 - 2 : 3'b000;
+ end else if (mant_sum96[3]) begin
+ norm_mant96 <= mant_sum96 << 3;
+ norm_exp96 <= (exp_out_add96 > 2) ? exp_out_add96 - 3 : 3'b000;
+ end else if (mant_sum96[2]) begin
+ norm_mant96 <= mant_sum96 << 4;
+ norm_exp96 <= (exp_out_add96 > 3) ? exp_out_add96 - 4 : 3'b000;
+ end else if (mant_sum96[1] || mant_sum96[0]) begin
+ norm_mant96 <= mant_sum96 << 5;
+ norm_exp96 <= (exp_out_add96 > 4) ? exp_out_add96 - 5 : 3'b000;
+ end else begin
+ // Result is zero
+ norm_mant96 <= 8'b0;
+ norm_exp96 <= 3'b000;
+ end
+
+ // Compose final result
+ result96 <= {sign_add96, norm_exp96, norm_mant96[6:3]};
+ end
+ end
+endmodule
